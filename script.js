@@ -59,15 +59,27 @@ function removeC() {
 //sets global var for selected color
 function selected() {
   colorSelected = document.getElementById("selectedID").value;
-  console.log(colorSelected);
+  console.log(colorSelected.toLowerCase());
+  return colorSelected.toLowerCase();
 }
 
 function fill() {
-  alert("Clicked Fill All");
+  //alert("Clicked Fill All");
+  colorSelected = selected();
+  let allTr = document.querySelectorAll("td");
+
+  for (let i = 0; i < allTr.length; i++) {
+    allTr[i].style.backgroundColor = colorSelected;
+  }
 }
 
 function clearAll() {
-  alert("Clicked Clear All");
+  //alert("Clicked Clear All");
+  let allTr = document.querySelectorAll("td");
+
+  for (let i = 0; i < allTr.length; i++) {
+    allTr[i].style.backgroundColor = "white";
+  }
 }
 
 function fillU() {
