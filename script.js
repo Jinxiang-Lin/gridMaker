@@ -10,12 +10,14 @@ function addR() {
     let td = document.createElement("td");
     tr.appendChild(td);
     document.getElementById("grid").appendChild(tr);
+    numRows++;
   } else {
     for (let i = 0; i < numCols + 1; i++) {
       let td = document.createElement("td");
       tr.appendChild(td);
     }
     document.getElementById("grid").appendChild(tr);
+    numRows++;
   }
 }
 //Add a column
@@ -32,11 +34,27 @@ function addC() {
 
 //Remove a row
 function removeR() {
-  alert("Clicked Remove Row");
+  //alert("Clicked Remove Row");
+  let table = document.querySelector("table");
+  let lastElement = table.lastElementChild;
+  table.removeChild(lastElement);
+  numRows--;
 }
 //Remove a column
 function removeC() {
-  alert("Clicked Remove Col");
+  if (numCols < 0) {
+    alert("no column can be removed");
+  }
+  //alert("Clicked Remove Col");
+  else {
+    let tr = document.querySelectorAll("tr");
+    for (let i = 0; i < tr.length; i++) {
+      let lastElement = tr[i].lastElementChild;
+      tr[i].removeChild(lastElement);
+    }
+    numCols--;
+  }
+  //console.log(tr);
 }
 //sets global var for selected color
 function selected() {
