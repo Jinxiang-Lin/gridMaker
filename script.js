@@ -5,14 +5,18 @@ let colorSelected;
 //Add a row
 function addR() {
   //alert("Clicked Add Row");
-  let tr = document.createElement("tr");
-  if (numCols === 0) {
+
+  // let allCols = document.querySelectorAll("td");
+  if (numCols === 0 && numRows === 0) {
+    let tr = document.createElement("tr");
     let td = document.createElement("td");
     tr.appendChild(td);
     document.getElementById("grid").appendChild(tr);
     numRows++;
+    numCols++;
   } else {
-    for (let i = 0; i < numCols + 1; i++) {
+    let tr = document.createElement("tr");
+    for (let i = 0; i < numCols; i++) {
       let td = document.createElement("td");
       tr.appendChild(td);
     }
@@ -24,25 +28,58 @@ function addR() {
 function addC() {
   //alert("Clicked Add Col");
 
-  let allRow = document.querySelectorAll("tr");
-  for (let i = 0; i < allRow.length; i++) {
+  //let allRow = document.querySelectorAll("tr");
+  if (numRows === 0 && numCols === 0) {
+    let tr = document.createElement("tr");
     let td = document.createElement("td");
-    allRow[i].append(td);
+    tr.appendChild(td);
+    document.getElementById("grid").appendChild(tr);
+    numCols++;
+    numRows++;
+  } else {
+    let allRow = document.querySelectorAll("tr");
+    for (let i = 0; i < allRow.length; i++) {
+      let td = document.createElement("td");
+      allRow[i].append(td);
+    }
+    numCols++;
   }
-  numCols++;
 }
 
 //Remove a row
 function removeR() {
   //alert("Clicked Remove Row");
-  let table = document.querySelector("table");
-  let lastElement = table.lastElementChild;
-  table.removeChild(lastElement);
-  numRows--;
+  // let allRow = document.querySelectorAll("tr");
+  // let allCol = document.querySelectorAll("td");
+  // if (!allRow || !allCol) {
+  //   numRows = 0;
+  //   numCols = 0;
+  // }
+  if (numRows == 0) {
+    alert("no rows can be removed");
+  } else {
+    let table = document.querySelector("table");
+    let lastElement = table.lastElementChild;
+    table.removeChild(lastElement);
+    numRows--;
+    if (numRows == 0) {
+      const table = document.getElementById("grid");
+      while (table.firstChild) {
+        table.removeChild(table.firstChild);
+      }
+      numCols = 0;
+    }
+  }
 }
 //Remove a column
 function removeC() {
-  if (numCols < 0) {
+  // let allCol = document.querySelectorAll("td");
+  // let allRow = document.querySelectorAll("tr");
+  // if (!allRow || !allCol) {
+  //   numCols = 0;
+  //   numRows = 0;
+  // }
+  if (numCols == 0) {
     alert("no column can be removed");
   }
   //alert("Clicked Remove Col");
@@ -53,6 +90,13 @@ function removeC() {
       tr[i].removeChild(lastElement);
     }
     numCols--;
+    if (numCols == 0) {
+      const table = document.getElementById("grid");
+      while (table.firstChild) {
+        table.removeChild(table.firstChild);
+      }
+      numRows = 0;
+    }
   }
   //console.log(tr);
 }
@@ -78,10 +122,18 @@ function clearAll() {
   let allTr = document.querySelectorAll("td");
 
   for (let i = 0; i < allTr.length; i++) {
-    allTr[i].style.backgroundColor = "white";
+    allTr[i].style.backgroundColor = "";
   }
 }
 
 function fillU() {
-  alert("Clicked Fill All Uncolored");
+  //alert("Clicked Fill All Uncolored");
+  colorSelected = selected();
+  let allTr = document.querySelectorAll("td");
+
+  for (let i = 0; i < allTr.length; i++) {
+    if (!allTr[i].style.backgroundColor) {
+      allTr[i].style.backgroundColor = colorSelected;
+    }
+  }
 }
