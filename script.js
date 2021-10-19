@@ -1,6 +1,16 @@
 let numRows = 0;
 let numCols = 0;
 let colorSelected;
+let tdClick = document.getElementById("grid");
+function clickHandler(e) {
+  let colorSelected = selected();
+  //console.log(e.target);
+  e.target.style.backgroundColor = colorSelected;
+}
+
+tdClick.addEventListener("click", function (e) {
+  clickHandler(e);
+});
 
 //Add a row
 function addR() {
